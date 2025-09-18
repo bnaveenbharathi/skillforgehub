@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, BookOpen, User, LogIn } from "lucide-react";
 
@@ -40,13 +41,17 @@ const Header = () => {
 
           {/* Desktop CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-              <LogIn className="h-4 w-4 mr-2" />
-              Login
+            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary" asChild>
+              <Link to="/login">
+                <LogIn className="h-4 w-4 mr-2" />
+                Login
+              </Link>
             </Button>
-            <Button className="btn-hero-outline">
-              <User className="h-4 w-4 mr-2" />
-              Sign Up
+            <Button className="btn-hero-outline" asChild>
+              <Link to="/signup">
+                <User className="h-4 w-4 mr-2" />
+                Sign Up
+              </Link>
             </Button>
           </div>
 
@@ -74,13 +79,17 @@ const Header = () => {
                 </a>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
-                <Button variant="ghost" size="sm" className="justify-start">
-                  <LogIn className="h-4 w-4 mr-2" />
-                  Login
+                <Button variant="ghost" size="sm" className="justify-start" asChild>
+                  <Link to="/login">
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Login
+                  </Link>
                 </Button>
-                <Button className="btn-hero-outline justify-start">
-                  <User className="h-4 w-4 mr-2" />
-                  Sign Up
+                <Button className="btn-hero-outline justify-start" asChild>
+                  <Link to="/signup">
+                    <User className="h-4 w-4 mr-2" />
+                    Sign Up
+                  </Link>
                 </Button>
               </div>
             </nav>
