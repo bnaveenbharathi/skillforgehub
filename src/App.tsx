@@ -12,6 +12,7 @@ import Assessment from "./pages/Assessment";
 import MockInterview from "./pages/MockInterview";
 import PlannerView from "./pages/PlannerView";
 import ELibrary from "./pages/ELibrary";
+import InterviewSession from "./pages/InterviewSession";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/learning-path" element={<LearningPath />} />
             <Route path="/assessment" element={<Assessment />} />
             <Route path="/mock-interview" element={<MockInterview />} />
+            <Route path="/interview-session" element={<InterviewSession />} />
             <Route path="/planner" element={<PlannerView />} />
             <Route path="/library" element={<ELibrary />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

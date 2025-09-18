@@ -264,8 +264,10 @@ const MockInterview = () => {
                       View Results
                     </Button>
                   )}
-                  <Button size="sm">
-                    {interview.status === "in-progress" ? "Continue" : "Start Interview"}
+                  <Button size="sm" asChild>
+                    <a href="/interview-session">
+                      {interview.status === "in-progress" ? "Continue" : "Start Interview"}
+                    </a>
                   </Button>
                 </div>
               </div>
