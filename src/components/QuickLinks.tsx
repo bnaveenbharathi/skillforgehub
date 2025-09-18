@@ -1,4 +1,4 @@
-import { BookOpen, Code, Users, FileText, ArrowRight } from "lucide-react";
+import { BookOpen, Code, Users, FileText, ArrowRight, Calendar, Book } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const QuickLinks = () => {
@@ -11,25 +11,25 @@ const QuickLinks = () => {
       href: "/learning-path"
     },
     {
-      title: "Projects",
-      description: "Collaborate on real-world projects",
-      icon: Code,
-      color: "from-green-500/20 to-green-400/20",
-      href: "/projects"
-    },
-    {
       title: "Mock Interviews",
       description: "Practice with AI-powered interviews",
       icon: Users,
       color: "from-blue-500/20 to-blue-400/20",
-      href: "/mock-interviews"
+      href: "/mock-interview"
     },
     {
-      title: "Portfolio",
-      description: "Showcase your achievements",
-      icon: FileText,
+      title: "Daily Planner",
+      description: "Manage your schedule and tasks",
+      icon: Calendar,
+      color: "from-green-500/20 to-green-400/20",
+      href: "/planner"
+    },
+    {
+      title: "E-Library",
+      description: "Access learning resources and guidance",
+      icon: Book,
       color: "from-purple-500/20 to-purple-400/20",
-      href: "/portfolio"
+      href: "/library"
     }
   ];
 
@@ -42,7 +42,7 @@ const QuickLinks = () => {
           className="h-auto p-0 w-full"
           asChild
         >
-          <div className="card-feature text-left cursor-pointer group">
+          <a href={link.href} className="card-feature text-left cursor-pointer group">
             <div className="flex items-center space-x-4">
               <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${link.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-200`}>
                 <link.icon className="h-6 w-6 text-primary" />
@@ -53,7 +53,7 @@ const QuickLinks = () => {
               </div>
               <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" />
             </div>
-          </div>
+          </a>
         </Button>
       ))}
     </div>
