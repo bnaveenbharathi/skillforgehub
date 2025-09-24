@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Bell, Search, Settings, User, BookOpen, LogOut, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,21 @@ import { Button } from "@/components/ui/button";
 const DashboardHeader = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    const users = JSON.parse(localStorage.getItem("sfh_users") || "[]");
+    const lastEmail = localStorage.getItem("sfh_last_login_email");
+    const user = users.find((u: any) => u.email === lastEmail) || users[users.length - 1] || null;
+    setProfile(user);
+  }, []);
+
+  function getInitials(name: string) {
+    if (!name) return "U";
+    const parts = name.trim().split(" ");
+    if (parts.length === 1) return parts[0][0].toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
 
   const notifications = [
     {
@@ -48,80 +63,14 @@ const DashboardHeader = () => {
 
           {/* Search Bar */}
           <div className="hidden md:flex flex-1 max-w-md mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search courses, projects, mentors..."
-                className="w-full pl-10 pr-4 py-2 rounded-xl border border-border bg-background/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-              />
-            </div>
+           
           </div>
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-4">
             {/* Notifications */}
-            <div className="relative">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="relative p-2"
-                onClick={() => setShowNotifications(!showNotifications)}
-              >
-                <Bell className="h-5 w-5" />
-                {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-destructive text-destructive-foreground text-xs rounded-full flex items-center justify-center">
-                    {unreadCount}
-                  </span>
-                )}
-              </Button>
-
-              {/* Notifications Dropdown */}
-              {showNotifications && (
-                <div className="absolute right-0 top-full mt-2 w-80 bg-background border border-border rounded-2xl shadow-[var(--shadow-medium)] backdrop-blur-sm z-50">
-                  <div className="p-4 border-b border-border">
-                    <h3 className="font-semibold text-foreground">Notifications</h3>
-                  </div>
-                  <div className="max-h-80 overflow-auto">
-                    {notifications.map((notification) => (
-                      <div
-                        key={notification.id}
-                        className={`p-4 border-b border-border/50 hover:bg-accent/50 transition-colors ${
-                          notification.unread ? 'bg-primary/5' : ''
-                        }`}
-                      >
-                        <div className="flex items-start space-x-3">
-                          {notification.unread && (
-                            <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                          )}
-                          <div className="flex-1">
-                            <h4 className="text-sm font-medium text-foreground">
-                              {notification.title}
-                            </h4>
-                            <p className="text-xs text-muted-foreground mt-1">
-                              {notification.message}
-                            </p>
-                            <span className="text-xs text-muted-foreground mt-2 block">
-                              {notification.time}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="p-4">
-                    <Button variant="ghost" className="w-full text-sm">
-                      View All Notifications
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Settings */}
-            <Button variant="ghost" size="sm" className="p-2">
-              <Settings className="h-5 w-5" />
-            </Button>
+            
+           
 
             {/* Profile */}
             <div className="relative">
@@ -132,9 +81,9 @@ const DashboardHeader = () => {
                 onClick={() => setShowProfile(!showProfile)}
               >
                 <div className="w-8 h-8 bg-gradient-to-br from-primary/20 to-primary-glow/20 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-semibold text-primary">JS</span>
+                  <span className="text-sm font-semibold text-primary">{getInitials(profile?.name)}</span>
                 </div>
-                <span className="hidden md:block text-sm font-medium">John Smith</span>
+                <span className="hidden md:block text-sm font-medium">{profile?.name || "User"}</span>
               </Button>
 
               {/* Profile Dropdown */}
@@ -143,11 +92,11 @@ const DashboardHeader = () => {
                   <div className="p-4 border-b border-border">
                     <div className="flex items-center space-x-3">
                       <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary-glow/20 rounded-full flex items-center justify-center">
-                        <span className="text-lg font-semibold text-primary">JS</span>
+                        <span className="text-lg font-semibold text-primary">{getInitials(profile?.name)}</span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground">John Smith</h3>
-                        <p className="text-sm text-muted-foreground">john.smith@email.com</p>
+                        <h3 className="font-semibold text-foreground">{profile?.name || "User"}</h3>
+                        <p className="text-sm text-muted-foreground">{profile?.email || "user@email.com"}</p>
                       </div>
                     </div>
                   </div>

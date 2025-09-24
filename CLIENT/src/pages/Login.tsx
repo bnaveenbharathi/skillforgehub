@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BookOpen, ArrowRight, Mail, User, Lock } from "lucide-react";
@@ -6,6 +7,7 @@ import FormInput from "@/components/FormInput";
 import SocialButton from "@/components/SocialButton";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -16,12 +18,20 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate login process
+    // Check localStorage for user
     setTimeout(() => {
+      const users = JSON.parse(localStorage.getItem("sfh_users") || "[]");
+      const found = users.find((u: any) => u.email === formData.email && u.password === formData.password);
       setIsLoading(false);
-      console.log("Login submitted:", formData);
-    }, 1000);
+      if (found) {
+        // Store last logged in email for dashboard profile fetch
+        localStorage.setItem("sfh_last_login_email", found.email);
+        alert("Login successful! Redirecting to dashboard...");
+        navigate("/dashboard");
+      } else {
+        alert("Invalid email or password.");
+      }
+    }, 500);
   };
 
   const handleSocialLogin = (provider: string) => {
@@ -63,37 +73,10 @@ const Login = () => {
             </p>
           </div>
 
-          <div className="bg-background/80 backdrop-blur-sm rounded-3xl p-8 border border-border/50 shadow-[var(--shadow-medium)]">
-            
-            {/* Social Login Options */}
-            <div className="space-y-4 mb-6">
-              <SocialButton
-                provider="google"
-                onClick={() => handleSocialLogin("google")}
-              >
-                <Mail className="h-5 w-5 mr-2" />
-                Continue with Google
-              </SocialButton>
-              
-              <SocialButton
-                provider="linkedin"
-                onClick={() => handleSocialLogin("linkedin")}
-              >
-                <User className="h-5 w-5 mr-2" />
-                Continue with LinkedIn
-              </SocialButton>
-            </div>
+          <div className="bg-background/80 backdrop-blur-sm rounded-3xl p-8 border border-border/50 shadow-[var(--shadow-medium)]"> 
 
             {/* Divider */}
-            <div className="relative mb-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border/50" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-background text-muted-foreground">Or sign in with email</span>
-              </div>
-            </div>
-
+           
             {/* Login Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
               <FormInput
@@ -156,63 +139,22 @@ const Login = () => {
                 </Link>
               </div>
               
-              <div className="flex items-center justify-center space-x-4 text-xs text-muted-foreground">
-                <Link to="/privacy" className="hover:text-primary transition-colors">
-                  Privacy Policy
-                </Link>
-                <span>•</span>
-                <Link to="/terms" className="hover:text-primary transition-colors">
-                  Terms of Service
-                </Link>
-              </div>
+           
             </div>
           </div>
 
-          {/* Benefits Preview */}
-          <div className="mt-8 bg-gradient-to-r from-primary/5 via-primary-glow/5 to-primary/5 rounded-2xl p-6 border border-primary/10">
-            <h3 className="font-semibold text-foreground mb-4 text-center">
-              What awaits you inside:
-            </h3>
-            <div className="space-y-3">
-              <div className="flex items-center text-sm">
-                <div className="w-2 h-2 bg-primary rounded-full mr-3" />
-                <span className="text-muted-foreground">Personalized AI learning paths</span>
-              </div>
-              <div className="flex items-center text-sm">
-                <div className="w-2 h-2 bg-primary rounded-full mr-3" />
-                <span className="text-muted-foreground">Real-world project collaborations</span>
-              </div>
-              <div className="flex items-center text-sm">
-                <div className="w-2 h-2 bg-primary rounded-full mr-3" />
-                <span className="text-muted-foreground">Expert mentorship & career guidance</span>
-              </div>
-              <div className="flex items-center text-sm">
-                <div className="w-2 h-2 bg-primary rounded-full mr-3" />
-                <span className="text-muted-foreground">Blockchain-verified certificates</span>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </main>
 
       {/* Footer */}
       <footer className="bg-background/80 backdrop-blur-sm border-t border-border/50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-muted-foreground">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+            <div className="text-sm text-muted-foreground text-center">
               © 2024 SkillForge Hub. All rights reserved.
             </div>
-            <div className="flex items-center space-x-6 text-sm">
-              <Link to="/support" className="text-muted-foreground hover:text-primary transition-colors">
-                Support
-              </Link>
-              <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
-                Contact
-              </Link>
-              <Link to="/help" className="text-muted-foreground hover:text-primary transition-colors">
-                Help Center
-              </Link>
-            </div>
+          
           </div>
         </div>
       </footer>

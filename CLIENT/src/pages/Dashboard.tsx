@@ -7,16 +7,28 @@ import ActivityFeed from "@/components/ActivityFeed";
 import Footer from "@/components/Footer";
 import { BookOpen, Target, Users, Trophy, Calendar, Briefcase } from "lucide-react";
 
+import { useEffect, useState } from "react";
+
 const Dashboard = () => {
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    // Get users and last logged in user (by email)
+    const users = JSON.parse(localStorage.getItem("sfh_users") || "[]");
+    // Optionally, you can store the last logged in email in localStorage on login
+    const lastEmail = localStorage.getItem("sfh_last_login_email");
+    const user = users.find((u: any) => u.email === lastEmail) || users[users.length - 1] || null;
+    setProfile(user);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5">
       <DashboardHeader />
-      
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
-            Welcome back, <span className="text-gradient">John!</span>
+            Welcome back, <span className="text-gradient">{profile?.name || "User"}!</span>
           </h1>
           <p className="text-lg text-muted-foreground">
             Ready to continue your journey? Here's what's happening today.
@@ -98,8 +110,7 @@ const Dashboard = () => {
             {/* Daily Planner */}
             <DailyPlanner />
             
-            {/* Activity Feed */}
-            <ActivityFeed />
+          
           </div>
         </div>
 

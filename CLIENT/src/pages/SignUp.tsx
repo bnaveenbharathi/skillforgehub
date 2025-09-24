@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BookOpen, ArrowRight, CheckCircle, Mail, User } from "lucide-react";
@@ -33,9 +34,19 @@ const SignUp = () => {
     { value: "cloud", label: "Cloud Computing" }
   ];
 
+  const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Form validation and submission logic here
+    try {
+      const users = JSON.parse(localStorage.getItem("sfh_users") || "[]");
+      users.push(formData);
+      localStorage.setItem("sfh_users", JSON.stringify(users));
+      alert("Signup successful! Redirecting to login...");
+      navigate("/login");
+    } catch (err) {
+      alert("Error saving signup data.");
+    }
     console.log("Form submitted:", formData);
   };
 
@@ -198,34 +209,7 @@ const SignUp = () => {
                 <ArrowRight className="h-5 w-5 ml-2" />
               </Button>
 
-              {/* Divider */}
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-border/50" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-background text-muted-foreground">Or continue with</span>
-                </div>
-              </div>
-
-              {/* Social Login */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <SocialButton
-                  provider="google"
-                  onClick={() => handleSocialLogin("google")}
-                >
-                  <Mail className="h-5 w-5 mr-2" />
-                  Google
-                </SocialButton>
-                
-                <SocialButton
-                  provider="linkedin"
-                  onClick={() => handleSocialLogin("linkedin")}
-                >
-                  <User className="h-5 w-5 mr-2" />
-                  LinkedIn
-                </SocialButton>
-              </div>
+              
             </form>
           </div>
         </div>
@@ -234,21 +218,11 @@ const SignUp = () => {
       {/* Footer */}
       <footer className="bg-background/80 backdrop-blur-sm border-t border-border/50 mt-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
             <div className="text-sm text-muted-foreground">
               © 2024 SkillForge Hub. All rights reserved.
             </div>
-            <div className="flex items-center space-x-6 text-sm">
-              <Link to="/support" className="text-muted-foreground hover:text-primary transition-colors">
-                Support
-              </Link>
-              <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
-                Contact
-              </Link>
-              <Link to="/help" className="text-muted-foreground hover:text-primary transition-colors">
-                Help Center
-              </Link>
-            </div>
+        
           </div>
         </div>
       </footer>
