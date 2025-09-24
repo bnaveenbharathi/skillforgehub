@@ -48,7 +48,7 @@ const Footer = () => {
             
             {/* Copyright */}
             <div className="text-muted-foreground text-sm text-center">
-              © 2024 SkillForge Hub. All rights reserved.
+              © 2025 SkillForge Hub. All rights reserved.
             </div>
 
             {/* Social Links */}

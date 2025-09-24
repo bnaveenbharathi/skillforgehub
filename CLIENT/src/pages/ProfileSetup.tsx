@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Camera, Github, Linkedin, User, Save, X, Plus, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
 
 const ProfileSetup = () => {
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     fullName: '',
     email: '',
@@ -18,13 +20,79 @@ const ProfileSetup = () => {
     careerPath: '',
     profilePhoto: null
   });
-
+  const [initialProfile, setInitialProfile] = useState<any>(null);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [initialSkills, setInitialSkills] = useState<string[]>([]);
   const [connectedAccounts, setConnectedAccounts] = useState({
     github: false,
     linkedin: false,
     portfolio: false
   });
+  const [initialAccounts, setInitialAccounts] = useState({
+    github: false,
+    linkedin: false,
+    portfolio: false
+  });
+
+  useEffect(() => {
+    // Fetch user from localStorage
+    const users = JSON.parse(localStorage.getItem("sfh_users") || "[]");
+    const lastEmail = localStorage.getItem("sfh_last_login_email");
+    const user = users.find((u: any) => u.email === lastEmail) || users[users.length - 1] || null;
+    if (user) {
+      const loadedProfile = {
+        fullName: user.name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        goals: user.careerGoals || '',
+        careerPath: user.careerPath || '',
+        profilePhoto: user.profilePhoto || null
+      };
+      setProfileData(loadedProfile);
+      setInitialProfile(loadedProfile);
+      setSelectedSkills(user.skills || []);
+      setInitialSkills(user.skills || []);
+      setConnectedAccounts(user.connectedAccounts || { github: false, linkedin: false, portfolio: false });
+      setInitialAccounts(user.connectedAccounts || { github: false, linkedin: false, portfolio: false });
+    }
+  }, []);
+
+  // Save/Update profile in localStorage
+  const handleSaveProfile = () => {
+    const users = JSON.parse(localStorage.getItem("sfh_users") || "[]");
+    const lastEmail = localStorage.getItem("sfh_last_login_email");
+    const idx = users.findIndex((u: any) => u.email === lastEmail);
+    const updatedUser = {
+      ...users[idx],
+      name: profileData.fullName,
+      email: profileData.email,
+      phone: profileData.phone,
+      careerGoals: profileData.goals,
+      careerPath: profileData.careerPath,
+      profilePhoto: profileData.profilePhoto,
+      skills: selectedSkills,
+      connectedAccounts: connectedAccounts
+    };
+    if (idx !== -1) {
+      users[idx] = updatedUser;
+      localStorage.setItem("sfh_users", JSON.stringify(users));
+      // If email changed, update last login email reference
+      if (lastEmail !== profileData.email) {
+        localStorage.setItem("sfh_last_login_email", profileData.email);
+      }
+      alert("Profile updated!");
+      setInitialProfile({ ...profileData });
+      setInitialSkills([...selectedSkills]);
+      setInitialAccounts({ ...connectedAccounts });
+    }
+  };
+
+  // Discard changes and reset to last saved state
+  const handleDiscard = () => {
+    if (initialProfile) setProfileData(initialProfile);
+    setSelectedSkills(initialSkills);
+    setConnectedAccounts(initialAccounts);
+  };
 
   const availableSkills = [
     'JavaScript', 'Python', 'React', 'Node.js', 'AI/ML', 'Data Science',
@@ -83,12 +151,14 @@ const ProfileSetup = () => {
               <Button 
                 variant="outline" 
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                onClick={() => navigate('/dashboard')}
               >
                 <X className="w-4 h-4 mr-2" />
-                Cancel
+                Back to Dashboard
               </Button>
               <Button 
                 className="bg-white text-primary hover:bg-white/90"
+                onClick={handleSaveProfile}
               >
                 <Save className="w-4 h-4 mr-2" />
                 Save Profile
@@ -250,105 +320,21 @@ const ProfileSetup = () => {
           </div>
         </Card>
 
-        {/* Connected Accounts Section */}
-        <Card className="p-8 bg-white/80 backdrop-blur-sm border-0 shadow-[var(--shadow-soft)]">
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Connected Accounts</h3>
-              <p className="text-muted-foreground">Connect your professional accounts for better recommendations</p>
-            </div>
-
-            <div className="space-y-4">
-              {/* GitHub */}
-              <div className="flex items-center justify-between p-4 border border-border rounded-lg bg-white/30">
-                <div className="flex items-center space-x-3">
-                  <Github className="w-6 h-6 text-foreground" />
-                  <div>
-                    <h4 className="font-medium text-foreground">GitHub</h4>
-                    <p className="text-sm text-muted-foreground">Showcase your coding projects</p>
-                  </div>
-                </div>
-                <Button
-                  variant={connectedAccounts.github ? "default" : "outline"}
-                  onClick={() => toggleConnection('github')}
-                  className={connectedAccounts.github ? "bg-green-500 hover:bg-green-600" : ""}
-                >
-                  {connectedAccounts.github ? (
-                    <>
-                      <Check className="w-4 h-4 mr-2" />
-                      Connected
-                    </>
-                  ) : (
-                    'Connect'
-                  )}
-                </Button>
-              </div>
-
-              {/* LinkedIn */}
-              <div className="flex items-center justify-between p-4 border border-border rounded-lg bg-white/30">
-                <div className="flex items-center space-x-3">
-                  <Linkedin className="w-6 h-6 text-blue-600" />
-                  <div>
-                    <h4 className="font-medium text-foreground">LinkedIn</h4>
-                    <p className="text-sm text-muted-foreground">Import your professional experience</p>
-                  </div>
-                </div>
-                <Button
-                  variant={connectedAccounts.linkedin ? "default" : "outline"}
-                  onClick={() => toggleConnection('linkedin')}
-                  className={connectedAccounts.linkedin ? "bg-green-500 hover:bg-green-600" : ""}
-                >
-                  {connectedAccounts.linkedin ? (
-                    <>
-                      <Check className="w-4 h-4 mr-2" />
-                      Connected
-                    </>
-                  ) : (
-                    'Connect'
-                  )}
-                </Button>
-              </div>
-
-              {/* Portfolio */}
-              <div className="flex items-center justify-between p-4 border border-border rounded-lg bg-white/30">
-                <div className="flex items-center space-x-3">
-                  <User className="w-6 h-6 text-purple-600" />
-                  <div>
-                    <h4 className="font-medium text-foreground">Portfolio Website</h4>
-                    <p className="text-sm text-muted-foreground">Link to your personal portfolio</p>
-                  </div>
-                </div>
-                <Button
-                  variant={connectedAccounts.portfolio ? "default" : "outline"}
-                  onClick={() => toggleConnection('portfolio')}
-                  className={connectedAccounts.portfolio ? "bg-green-500 hover:bg-green-600" : ""}
-                >
-                  {connectedAccounts.portfolio ? (
-                    <>
-                      <Check className="w-4 h-4 mr-2" />
-                      Connected
-                    </>
-                  ) : (
-                    'Connect'
-                  )}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Card>
-
+        
         {/* Action Buttons */}
         <div className="flex justify-center space-x-4 pb-8">
           <Button 
             variant="outline" 
             size="lg"
             className="px-8"
+            onClick={handleDiscard}
           >
             Discard Changes
           </Button>
           <Button 
             size="lg"
             className="px-8 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 shadow-lg hover:shadow-xl transition-all duration-200"
+            onClick={handleSaveProfile}
           >
             <Save className="w-5 h-5 mr-2" />
             Update Profile
@@ -357,15 +343,31 @@ const ProfileSetup = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-muted/30 border-t border-border/50 py-6">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="flex justify-center space-x-6 text-sm text-muted-foreground">
-            <Link to="#" className="hover:text-primary transition-colors">Support</Link>
-            <Link to="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
-            <Link to="#" className="hover:text-primary transition-colors">Terms of Service</Link>
+      <footer className="bg-gradient-to-b from-background to-accent/20 border-t border-border/50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Main Footer Content */}
+        
+
+        {/* Bottom Section */}
+        <div className="py-8 border-t border-border/50">
+          <div className="flex justify-center gap-10">
+            
+            {/* Copyright */}
+            <div className="text-muted-foreground text-sm text-center">
+              © 2024 SkillForge Hub. All rights reserved.
+            </div>
+
+            {/* Social Links */}
+           
+            {/* Additional Info */}
+            <div className="text-muted-foreground text-sm">
+              Made with ❤️ for future innovators
+            </div>
           </div>
         </div>
-      </footer>
+      </div>
+    </footer>
     </div>
   );
 };

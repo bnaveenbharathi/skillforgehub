@@ -16,6 +16,7 @@ import ELibrary from "./pages/ELibrary";
 import InterviewSession from "./pages/InterviewSession";
 import ProfileSetup from "./pages/ProfileSetup";
 import NotFound from "./pages/NotFound";
+import Mentor from "./pages/Mentor";
 import { BlockchainApp } from "./blockchain";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/library" element={<ELibrary />} />
           <Route path="/profile" element={<ProfileSetup />} />
           <Route path="/certificates" element={<BlockchainApp />} />
+          <Route path="/mentor" element={<Mentor />} />
           <Route
             path="/certificates/verify/:certificateId"
             element={<BlockchainApp />}

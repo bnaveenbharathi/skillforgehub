@@ -12,9 +12,9 @@ interface ProgressCardProps {
 const ProgressCard = ({ title, value, total, icon: Icon, color, trend }: ProgressCardProps) => {
   const colorClasses = {
     primary: "from-primary/10 to-primary-glow/10 text-primary border-primary/20",
-    success: "from-green-500/10 to-green-400/10 text-green-600 border-green-500/20",
-    warning: "from-yellow-500/10 to-yellow-400/10 text-yellow-600 border-yellow-500/20",
-    info: "from-blue-500/10 to-blue-400/10 text-blue-600 border-blue-500/20"
+    success: "from-green-500/10 to-primary-glow/10 text-green-600 border-green-500/20",
+    warning: "from-yellow-500/10 to-primary-glow/10 text-yellow-600 border-yellow-500/20",
+    info: "from-blue-500/10 to-primary-glow/10 text-blue-600 border-blue-500/20"
   };
 
   const percentage = total ? (value / total) * 100 : 0;

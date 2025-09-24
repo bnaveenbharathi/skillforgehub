@@ -101,14 +101,7 @@ const DashboardHeader = () => {
                     </div>
                   </div>
                   <div className="p-2">
-                    <Button variant="ghost" className="w-full justify-start">
-                      <User className="h-4 w-4 mr-3" />
-                      Profile Settings
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start">
-                      <HelpCircle className="h-4 w-4 mr-3" />
-                      Help & Support
-                    </Button>
+                   
                     <div className="border-t border-border my-2" />
                     <Button variant="ghost" className="w-full justify-start text-destructive hover:text-destructive">
                       <LogOut className="h-4 w-4 mr-3" />

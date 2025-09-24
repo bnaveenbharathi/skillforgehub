@@ -6,50 +6,50 @@ const ProgressTracker = () => {
       id: 1,
       title: "JavaScript Fundamentals",
       description: "Variables, functions, and basic concepts",
-      status: "completed",
-      date: "Jan 15, 2024"
+      status: "current",
+      date: "In Progress"
     },
     {
       id: 2,
       title: "DOM Manipulation",
       description: "Working with HTML elements",
-      status: "completed",
-      date: "Jan 22, 2024"
+      status: "upcoming",
+      date: "Jan 22, 2025"
     },
     {
       id: 3,
       title: "React Basics",
       description: "Components and JSX",
-      status: "completed",
-      date: "Feb 5, 2024"
+      status: "upcoming",
+      date: "Feb 5, 2025"
     },
     {
       id: 4,
       title: "State Management",
       description: "useState and useEffect hooks",
-      status: "current",
-      date: "In Progress"
+      status: "upcoming",
+      date: "Feb 10, 2025"
     },
     {
       id: 5,
       title: "API Integration",
       description: "Fetch data and handle responses",
       status: "upcoming",
-      date: "Feb 28, 2024"
+      date: "Feb 28, 2025"
     },
     {
       id: 6,
       title: "Final Project",
       description: "Build a complete React application",
       status: "upcoming",
-      date: "Mar 15, 2024"
+      date: "Mar 15, 2025"
     }
   ];
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return <CheckCircle className="h-5 w-5 text-green-500" />;
+        return <CheckCircle className="h-5 w-5 text-sky-500" />;
       case "current":
         return <Play className="h-5 w-5 text-primary animate-pulse" />;
       default:
@@ -92,10 +92,10 @@ const ProgressTracker = () => {
                   <div className="mt-3">
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs text-muted-foreground">Module Progress</span>
-                      <span className="text-xs font-medium">65%</span>
+                      <span className="text-xs font-medium">0%</span>
                     </div>
                     <div className="w-full bg-accent/50 rounded-full h-1.5">
-                      <div className="h-1.5 bg-gradient-to-r from-primary to-primary-glow rounded-full w-2/3" />
+                      <div className="h-1.5 bg-gradient-to-r from-primary to-primary-glow rounded-full w-0" />
                     </div>
                   </div>
                 )}
@@ -109,10 +109,10 @@ const ProgressTracker = () => {
         <div className="flex items-center justify-between">
           <div>
             <p className="font-medium text-foreground">Overall Progress</p>
-            <p className="text-sm text-muted-foreground">50% complete • 3 of 6 milestones</p>
+            <p className="text-sm text-muted-foreground">0% complete • 0 of 6 milestones</p>
           </div>
           <div className="text-right">
-            <div className="text-2xl font-bold text-gradient">50%</div>
+            <div className="text-2xl font-bold text-gradient">0%</div>
             <Clock className="h-4 w-4 text-muted-foreground mx-auto" />
           </div>
         </div>

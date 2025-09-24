@@ -13,7 +13,7 @@ const LearningPath = () => {
       duration: "4 weeks",
       difficulty: "Beginner" as const,
       progress: 100,
-      status: "completed" as const,
+      status: "current" as const,
       modules: 8,
       rating: 4.8,
       enrolledStudents: 12500,
@@ -24,7 +24,7 @@ const LearningPath = () => {
       duration: "6 weeks",
       difficulty: "Intermediate" as const,
       progress: 65,
-      status: "current" as const,
+      status: "locked" as const,
       modules: 12,
       rating: 4.9,
       enrolledStudents: 8900,
@@ -35,7 +35,7 @@ const LearningPath = () => {
       duration: "5 weeks",
       difficulty: "Intermediate" as const,
       progress: 0,
-      status: "available" as const,
+      status: "locked" as const,
       modules: 10,
       rating: 4.7,
       enrolledStudents: 6700,
@@ -63,7 +63,7 @@ const LearningPath = () => {
     },
     {
       label: "Completion Rate",
-      value: "92%",
+      value: "0%",
       icon: Target,
       color: "text-green-600"
     },
@@ -140,27 +140,27 @@ const LearningPath = () => {
                     Master useState, useEffect, and custom hooks with practical examples
                   </p>
                   <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                    <span>Module 4 of 12</span>
-                    <span>45 min remaining</span>
+                    <span>Module 0 of 12</span>
+                   
                   </div>
                 </div>
                 <div className="space-y-3">
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm text-muted-foreground">Module Progress</span>
-                      <span className="text-sm font-medium">75%</span>
+                      <span className="text-sm font-medium">0%</span>
                     </div>
                     <div className="w-full bg-accent/50 rounded-full h-2">
-                      <div className="h-2 bg-gradient-to-r from-primary to-primary-glow rounded-full w-3/4" />
+                      <div className="h-2 bg-gradient-to-r from-primary to-primary-glow rounded-full w-0" />
                     </div>
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm text-muted-foreground">Course Progress</span>
-                      <span className="text-sm font-medium">65%</span>
+                      <span className="text-sm font-medium">0%</span>
                     </div>
                     <div className="w-full bg-accent/50 rounded-full h-2">
-                      <div className="h-2 bg-gradient-to-r from-green-500 to-green-400 rounded-full w-2/3" />
+                      <div className="h-2 bg-gradient-to-r from-green-500 to-green-400 rounded-full w-0" />
                     </div>
                   </div>
                 </div>
