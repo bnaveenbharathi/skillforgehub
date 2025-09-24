@@ -26,11 +26,7 @@ const Hero = () => {
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 pt-16">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
-            <Sparkles className="h-4 w-4 text-primary mr-2" />
-            <span className="text-sm font-medium text-primary">AI-Powered Career Development</span>
-          </div>
-
+          
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
             Forge Your Future with{" "}
@@ -49,36 +45,10 @@ const Hero = () => {
               Start Your Journey
               <ArrowRight className="h-5 w-5 ml-2" />
             </Button>
-            <Button variant="outline" className="btn-hero-outline w-full sm:w-auto">
-              <Play className="h-5 w-5 mr-2" />
-              Watch Demo
-            </Button>
+           
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <Users className="h-6 w-6 text-primary mr-2" />
-                <span className="text-3xl font-bold text-gradient">50K+</span>
-              </div>
-              <p className="text-muted-foreground">Active Learners</p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <TrendingUp className="h-6 w-6 text-primary mr-2" />
-                <span className="text-3xl font-bold text-gradient">95%</span>
-              </div>
-              <p className="text-muted-foreground">Success Rate</p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <Sparkles className="h-6 w-6 text-primary mr-2" />
-                <span className="text-3xl font-bold text-gradient">1000+</span>
-              </div>
-              <p className="text-muted-foreground">Career Paths</p>
-            </div>
-          </div>
+          
         </div>
       </div>
 

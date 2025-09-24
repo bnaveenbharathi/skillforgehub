@@ -16,20 +16,7 @@ const Testimonials = () => {
       content: "The collaborative projects and peer learning environment at SkillForge Hub are unmatched. I built real solutions for actual companies and gained the confidence to land my dream job at Microsoft.",
       rating: 5
     },
-    {
-      name: "Priya Sharma",
-      role: "Product Manager at Amazon",
-      image: "PS",
-      content: "The personalized mentorship and blockchain-verified certificates gave me a competitive edge. Employers actually trusted my SkillForge credentials more than traditional degrees.",
-      rating: 5
-    },
-    {
-      name: "Alex Rodriguez",
-      role: "Full Stack Developer at Netflix",
-      image: "AR",
-      content: "From zero coding experience to Netflix engineer in 10 months. The structured learning path, real-world projects, and interview preparation were exactly what I needed to succeed.",
-      rating: 5
-    }
+    
   ];
 
   return (
@@ -78,27 +65,7 @@ const Testimonials = () => {
           ))}
         </div>
 
-        {/* Stats Section */}
-        <div className="mt-20 bg-gradient-to-r from-primary/5 via-primary-glow/5 to-primary/5 rounded-3xl p-8 lg:p-12 border border-primary/10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-gradient mb-2">95%</div>
-              <p className="text-muted-foreground">Career Success Rate</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-gradient mb-2">$85K</div>
-              <p className="text-muted-foreground">Average Salary Increase</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-gradient mb-2">6 Months</div>
-              <p className="text-muted-foreground">Average Time to Job</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-gradient mb-2">50K+</div>
-              <p className="text-muted-foreground">Success Stories</p>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>
   );
